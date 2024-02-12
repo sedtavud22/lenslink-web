@@ -8,17 +8,27 @@ const bgClass = {
   accent: {
     bg: "btn-accent",
   },
+  transparent: {
+    bg: "bg-transparent",
+  },
 };
 
 const colorClass = {
   white: "text-white",
+  black: "text-black",
 };
 
 const widthClass = {
   full: "w-full",
 };
 
-function Button({ children, bg, color, width, ...props }) {
+function Button({
+  children,
+  bg = "primary",
+  color = "white",
+  width,
+  ...props
+}) {
   let classes = `
   ${bg ? bgClass[bg].bg + " " : ""} ${color ? colorClass[color] : ""} ${
     width ? widthClass[width] : ""
