@@ -1,19 +1,57 @@
-function Dropdown({ title, ...props }) {
+import { Link } from "react-router-dom";
+import DropdownItems from "./DropdownItems";
+
+function Dropdown({ children, dropDownParent = "default", links, logout }) {
+  const classes = {
+    default: {
+      detailsClasses: "dropdown",
+      summaryClasses:
+        "m-1 btn btn-ghost dropdown__arrow text-base font-normal hover:bg-secondary px-5",
+    },
+    avatar: {
+      detailsClasses: "dropdown dropdown-end",
+      summaryClasses: "m-1 btn btn-circle text-base font-normal",
+    },
+  };
+
   return (
-    <ul className="menu menu-horizontal text-base">
-      <li>
-        <details>
-          <summary className="hover:bg-secondary">{title}</summary>
-          <ul className="bg-base-100 rounded-t-none">
-            {Object.values(props).map((el, index) => (
-              <li key={index} className="hover:bg-secondary">
-                <a>{el}</a>
-              </li>
-            ))}
-          </ul>
-        </details>
-      </li>
-    </ul>
+    // <ul className="menu menu-horizontal text-base">
+    //   <li>
+    //     <details>
+    //       <summary className="hover:bg-secondary py-3 px-6">{children}</summary>
+    //       <ul className="bg-base-100 rounded-t-none">
+    //         {links &&
+    //           Object.entries(links).map((el, index) => (
+    //             <li key={index} className="w-36">
+    //               <Link to={`/${el[0]}`}>{el[1]}</Link>
+    //             </li>
+    //           ))}
+    //       </ul>
+    //     </details>
+    //   </li>
+    // </ul>
+
+    <details className={classes[dropDownParent].detailsClasses}>
+      {/* Dropdown Parent */}
+      <summary className={classes[dropDownParent].summaryClasses}>
+        {children}
+      </summary>
+
+      {/* Dropdown Content */}
+      <ul className="p-2 shadow menu dropdown-content z-[1] rounded-box w-52">
+        {links &&
+          Object.entries(links).map((el, index) => (
+            <DropdownItems key={index}>
+              <Link to={`/${el[0]}`}>{el[1]}</Link>
+            </DropdownItems>
+          ))}
+        {dropDownParent === "avatar" && (
+          <DropdownItems>
+            <div onClick={logout}>Logout</div>
+          </DropdownItems>
+        )}
+      </ul>
+    </details>
   );
 }
 

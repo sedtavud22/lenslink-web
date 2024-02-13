@@ -15,15 +15,20 @@ function Select({ options, register, name, errors, ...props }) {
         {...register(name)}
         {...props}
       >
+        {/* Disabled option */}
         <option disabled value="">
           {`${name[0].toUpperCase()}${name.slice(1, name.length)}`}
         </option>
+
+        {/* Options */}
         {options?.map((value) => (
           <option key={value} value={value}>
             {value}
           </option>
         ))}
       </select>
+
+      {/* Error */}
       {errors[name] && (
         <small className="text-error">{errors[name].message}</small>
       )}

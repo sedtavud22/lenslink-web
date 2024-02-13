@@ -1,15 +1,18 @@
+import { Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
 
 function Menu() {
   return (
-    <div className="flex gap-16 justify-center items-center">
-      <div className="hover:bg-secondary px-4 py-2 rounded-lg" role="button">
+    <div className="flex gap-10 justify-center items-center">
+      <Link className="hover:bg-secondary px-8 py-3 rounded-lg" to="/">
         Home
-      </div>
-      <div className="hover:bg-secondary px-4 py-2 rounded-lg" role="button">
+      </Link>
+      <Link className="hover:bg-secondary px-8 py-3 rounded-lg" to="/">
         About
+      </Link>
+      <div className="flex items-center">
+        <Dropdown links={{ work: "Work", blog: "Blog" }}>Services</Dropdown>
       </div>
-      <Dropdown title="Services" link1="Work" link2="Blog" />
     </div>
   );
 }

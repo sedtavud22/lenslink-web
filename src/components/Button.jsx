@@ -34,7 +34,7 @@ function Button({
     width ? widthClass[width] : ""
   }`;
   return (
-    <button className={`btn ${classes}`} {...props}>
+    <button className={`btn px-6 ${classes}`} {...props}>
       {children}
     </button>
   );

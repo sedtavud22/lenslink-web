@@ -17,6 +17,7 @@ export default {
       colors: {
         blackText: "#212529",
         grayText: "#6c657d",
+        lightGrayText: "#8d8d8d",
       },
     },
   },
@@ -25,10 +26,13 @@ export default {
     themes: [
       {
         mytheme: {
-          primary: "#2D88DF",
+          primary: "#2d88bf",
           secondary: "#f2f5f7",
-          accent: "#4CA1FF",
+          accent: "#4ca1ff",
+          neutral: "#f2f5f7",
+          "base-100": "#ffffff",
           success: "#2ecc71",
+          warning: "#f26522",
           error: "#ff0000",
         },
       },
