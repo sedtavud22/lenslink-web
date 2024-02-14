@@ -21,7 +21,7 @@ function FooterForm() {
         Will send you weekly updates on photography news
       </p>
 
-      <form className="relative" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex items-center" onSubmit={handleSubmit(onSubmit)}>
         {/* Enter Email */}
         <Input
           register={register}
@@ -30,9 +30,9 @@ function FooterForm() {
           placeholder="Email address"
         />
         {/* Button */}
-        <button className="w-9 h-9 rounded-full bg-primary absolute right-0 top-1/2 -translate-x-2/4 -translate-y-2/4 transform-gpu">
-          <div className="absolute left-1/2 -translate-x-2/4 -translate-y-2/4 transform-gpu">
-            <ArrowRightIcon className="w-5 h-5 fill-white" />
+        <button className="btn btn-circle btn-primary -ml-16" type="submit">
+          <div className="">
+            <ArrowRightIcon className="w-6 h-6 fill-white" />
           </div>
         </button>
       </form>

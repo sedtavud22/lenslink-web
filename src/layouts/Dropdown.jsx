@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import DropdownItems from "./DropdownItems";
+import { useEffect } from "react";
 
 function Dropdown({ children, dropDownParent = "default", links, logout }) {
   const classes = {
@@ -13,6 +14,18 @@ function Dropdown({ children, dropDownParent = "default", links, logout }) {
       summaryClasses: "m-1 btn btn-circle text-base font-normal",
     },
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      document.querySelectorAll(".dropdown").forEach(function (dropdown) {
+        if (!dropdown.contains(e.target)) {
+          dropdown.open = false;
+        }
+      });
+    };
+    document.addEventListener("mouseup", handleClickOutside);
+    return () => document.removeEventListener("mouseup", handleClickOutside);
+  }, []);
 
   return (
     // <ul className="menu menu-horizontal text-base">
@@ -38,7 +51,7 @@ function Dropdown({ children, dropDownParent = "default", links, logout }) {
       </summary>
 
       {/* Dropdown Content */}
-      <ul className="p-2 shadow menu dropdown-content z-[1] rounded-box w-52">
+      <ul className="p-2 shadow menu dropdown-content z-[1] rounded-box w-52 bg-base-100">
         {links &&
           Object.entries(links).map((el, index) => (
             <DropdownItems key={index}>

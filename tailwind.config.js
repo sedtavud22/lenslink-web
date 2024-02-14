@@ -13,11 +13,12 @@ export default {
         "serif",
       ],
     },
+
     extend: {
       colors: {
         blackText: "#212529",
         grayText: "#6c657d",
-        lightGrayText: "#8d8d8d",
+        lightGrayText: "#7d7d7d",
       },
     },
   },
@@ -31,8 +32,9 @@ export default {
           accent: "#4ca1ff",
           neutral: "#f2f5f7",
           "base-100": "#ffffff",
+          "base-300": "#ffff00",
           success: "#2ecc71",
-          warning: "#f26522",
+          warning: "#ff4c4c",
           error: "#ff0000",
         },
       },
