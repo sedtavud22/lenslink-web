@@ -1,6 +1,7 @@
 import logo from "../../../assets/lenslink.png";
 
 function WorkCardImage({ src }) {
+  console.log(src);
   return (
     <figure>
       <img

@@ -9,9 +9,7 @@ function PictureForm({ initialSrc, register, name, errors, image, setImage }) {
   const handleUploadedFile = (event) => {
     const file = event.target.files[0];
 
-    const urlImage = URL.createObjectURL(file);
-
-    setImage(urlImage);
+    setImage(file);
   };
 
   return (
@@ -32,7 +30,7 @@ function PictureForm({ initialSrc, register, name, errors, image, setImage }) {
           onClick={() => fileEl.current.click()}
         >
           <img
-            src={image}
+            src={URL.createObjectURL(image)}
             alt="cardImg"
             className="mx-auto aspect-[4/3] object-cover"
           />
@@ -53,7 +51,7 @@ function PictureForm({ initialSrc, register, name, errors, image, setImage }) {
           onClick={() => fileEl.current.click()}
         >
           <img
-            src={image}
+            src={initialSrc}
             alt="cardImg"
             className="mx-auto aspect-[4/3] object-cover"
           />
