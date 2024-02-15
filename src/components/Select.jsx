@@ -12,7 +12,7 @@ function Select({ options, register, name, errors, ...props }) {
         className={`${defaultClasses} ${extendedClasses}`}
         autoComplete="off"
         defaultValue=""
-        {...register(name)}
+        {...register?.(name)}
         {...props}
       >
         {/* Disabled option */}
@@ -29,8 +29,8 @@ function Select({ options, register, name, errors, ...props }) {
       </select>
 
       {/* Error */}
-      {errors[name] && (
-        <small className="text-error">{errors[name].message}</small>
+      {errors?.[name] && (
+        <small className="text-error">{errors?.[name].message}</small>
       )}
     </>
   );

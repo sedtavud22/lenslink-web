@@ -12,7 +12,7 @@ function WorkList() {
       {/* Create Work */}
       {authUser?.role === USER_ROLE.Photographer && (
         <div className="mb-8 w-full text-end">
-          <Link to="/create-edit">
+          <Link to="/create">
             <Button>Create Work</Button>
           </Link>
         </div>

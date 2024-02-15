@@ -5,7 +5,7 @@ import useAuth from "../hooks/use-auth";
 function ProtectedPhotographer({ children }) {
   const { authUser } = useAuth();
 
-  return authUser && authUser.role === USER_ROLE.Photographer ? (
+  return authUser?.role === USER_ROLE.Photographer ? (
     children
   ) : (
     <Navigate to="/" />

@@ -1,9 +1,12 @@
-function WorkCardImage() {
+import logo from "../../../assets/lenslink.png";
+
+function WorkCardImage({ src }) {
   return (
     <figure>
       <img
-        src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-        alt="Shoes"
+        src={src || logo}
+        alt="CardImg"
+        className="aspect-[4/3] object-cover"
       />
     </figure>
   );

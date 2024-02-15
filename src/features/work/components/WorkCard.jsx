@@ -7,7 +7,7 @@ import WorkCardInfo from "./WordCardInfo";
 function WorkCard() {
   return (
     <div className="card w-96 bg-secondary shadow-xl">
-      <WorkCardImage />
+      <WorkCardImage src={null} />
       <div className="card-body">
         {/* Title */}
         <h2 className="card-title text-2xl">

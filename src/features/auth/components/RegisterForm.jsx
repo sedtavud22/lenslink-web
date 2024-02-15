@@ -31,6 +31,7 @@ function RegisterForm() {
       await registerUser(user);
       reset();
       document.getElementById("register_form").close();
+      toast.success("Successfully registered");
     } catch (error) {
       if (error?.response.data.message === "EMAIL_IN_USE") {
         setError("email", {
