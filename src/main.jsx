@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
+import "react-image-gallery/styles/css/image-gallery.css";
 import "./index.css";
 import AuthContextProvider from "./features/auth/contexts/AuthContext.jsx";
 import WorkContextProvider from "./features/work/contexts/WorkContext.jsx";

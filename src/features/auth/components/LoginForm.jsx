@@ -37,7 +37,6 @@ function LoginForm() {
   return (
     <Modal
       modalId="login_form"
-      btnName="Login"
       title="Sign In"
       text="Don't have an account?"
       spanText="Sign Up"

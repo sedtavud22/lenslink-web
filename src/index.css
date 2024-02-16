@@ -25,3 +25,12 @@
   transform: rotate(225deg);
   margin-top: 0;
 }
+
+.image-gallery-image {
+  aspect-ratio: 4 / 3 !important;
+}
+
+.image-gallery-thumbnail-image {
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+}

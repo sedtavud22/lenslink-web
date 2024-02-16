@@ -47,7 +47,6 @@ function RegisterForm() {
   return (
     <Modal
       modalId="register_form"
-      btnName="Register"
       title="Sign Up"
       text="Already have an account?"
       spanText="Sign In"

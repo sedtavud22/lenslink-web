@@ -6,12 +6,12 @@ function Breadcrumbs({ links, currentPage }) {
       <ul>
         {links &&
           Object.entries(links).map((el, index) => (
-            <li key={index} className="text-gray-500">
+            <li key={index} className="text-gray-600 font-medium">
               <Link to={`/${el[0]}`}>{el[1]}</Link>
             </li>
           ))}
 
-        <li className="font-medium">{currentPage}</li>
+        <li className="font-semibold">{currentPage}</li>
       </ul>
     </div>
   );

@@ -5,6 +5,7 @@ import WorkPage from "../pages/WorkPage";
 import CreateWorkPage from "../pages/CreateWorkPage";
 import ProtectedPhotographer from "./ProtectedPhotographer";
 import EditWorkPage from "../pages/EditWorkPage";
+import WorkInfoPage from "../pages/WorkInfoPage";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +17,19 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "work",
+        path: "work/",
         element: <WorkPage />,
+      },
+      {
+        path: "work/:workId",
+        element: <WorkInfoPage />,
       },
       {
         path: "create",
         element: (
-          // <ProtectedPhotographer>
-          <CreateWorkPage />
-          // </ProtectedPhotographer>
+          <ProtectedPhotographer>
+            <CreateWorkPage />
+          </ProtectedPhotographer>
         ),
       },
       {

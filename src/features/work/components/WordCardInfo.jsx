@@ -1,6 +1,8 @@
-function WordCardInfo({ children }) {
+function WordCardInfo({ children, textSize = "text-sm" }) {
   return (
-    <div className="flex items-center gap-1 text-lightGrayText">{children}</div>
+    <div className={`flex items-center gap-1 text-lightGrayText ${textSize}`}>
+      {children}
+    </div>
   );
 }
 

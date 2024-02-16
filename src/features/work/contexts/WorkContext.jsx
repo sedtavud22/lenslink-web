@@ -13,10 +13,18 @@ export default function WorkContextProvider({ children }) {
       .catch((error) => console.log(error));
   }, []);
 
-  const createWork = async (formData) => await workApi.createWork(formData);
+  const createWork = async (formData) => {
+    const res = await workApi.createWork(formData);
+    setWorks((prev) => [res.data.work, ...prev]);
+  };
+
+  const deleteWork = async (workId) => {
+    const res = await workApi.deleteWork(workId);
+    setWorks(res.data.works);
+  };
 
   return (
-    <WorkContext.Provider value={{ works, createWork }}>
+    <WorkContext.Provider value={{ works, createWork, deleteWork }}>
       {children}
     </WorkContext.Provider>
   );

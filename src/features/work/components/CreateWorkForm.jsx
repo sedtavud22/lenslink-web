@@ -7,7 +7,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import useWork from "../hooks/use-work";
 import Loading from "../../../components/Loading";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CreateWorkForm() {
   const [cardImage, setCardImage] = useState(null);
@@ -17,6 +17,8 @@ function CreateWorkForm() {
   const [loading, setLoading] = useState(false);
 
   const { createWork } = useWork();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -60,7 +62,7 @@ function CreateWorkForm() {
       setsubImage2(null);
       setsubImage3(null);
       toast.success("Successfully create work");
-      redirect("/work");
+      navigate("/work");
     } catch (error) {
       toast.error(error.response?.data.message);
     } finally {
