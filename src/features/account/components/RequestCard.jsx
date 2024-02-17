@@ -1,26 +1,45 @@
+import { format } from "date-fns";
+import { USER_ROLE } from "../../../constants";
+import useAuth from "../../../hooks/use-auth";
+import { Link } from "react-router-dom";
+
 function RequestCard({ request }) {
+  const { authUser } = useAuth();
+
   return (
     <div>
       <hr className="border mb-10" />
 
-      <div className="flex gap-8 items-center">
+      <Link
+        className="flex gap-8 items-center"
+        to={`/account/request/${request?.id}`}
+      >
         {/* Image */}
         <div className="w-36 aspect-[4/3] rounded-lg">
           <img
             className="aspect-[4/3] rounded-lg object-cover"
-            src="https://images.pexels.com/photos/1107807/pexels-photo-1107807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src={request.work?.cardImageUrl}
           />
         </div>
 
         {/* Info */}
         <div className="flex flex-col gap-4">
-          <h3 className="text-lightGrayText text-2xl">Pending</h3>
+          <h3 className="text-lightGrayText text-2xl">{request?.status}</h3>
           <div>
-            <p>From Pongsatorn xdd</p>
-            <p>19 Jan 2024</p>
+            {authUser?.role === USER_ROLE.Photographer && (
+              <p>
+                From {request.user?.firstName} {request.user?.lastName}
+              </p>
+            )}
+            {authUser?.role === USER_ROLE.Client && (
+              <p>
+                {request.work.user?.firstName} {request.work.user?.lastName}
+              </p>
+            )}
+            <p>{format(request?.createdAt, "PP")}</p>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

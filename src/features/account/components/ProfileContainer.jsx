@@ -1,8 +1,16 @@
+import Loading from "../../../components/Loading";
 import BreadcrumbsTab from "../../../layouts/BreadcrumbsTab";
+import useProfile from "../hooks/use-profile";
 import ProfileInfo from "./ProfileInfo";
 import Sidebar from "./Sidebar";
 
 function ProfileContainer() {
+  const { loading } = useProfile();
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div>
       <BreadcrumbsTab links={{ Home: "" }} currentPage="Account" />

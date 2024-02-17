@@ -14,3 +14,9 @@ export const cancelRequest = (workId) =>
 
 export const completeRequest = (workId) =>
   axios.patch(`/requests/works/${workId}/complete`);
+
+export const getRequestsByUserId = (userId) =>
+  axios.get(`/requests/user/${userId}`);
+
+export const getRequestByRequestId = (requestId) =>
+  axios.get(`/requests/${requestId}`);
