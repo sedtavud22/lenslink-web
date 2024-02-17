@@ -55,7 +55,7 @@ function Dropdown({ children, dropDownParent = "default", links, logout }) {
         {links &&
           Object.entries(links).map((el, index) => (
             <DropdownItems key={index}>
-              <Link to={`/${el[0]}`}>{el[1]}</Link>
+              <Link to={`/${el[1]}`}>{el[0]}</Link>
             </DropdownItems>
           ))}
         {dropDownParent === "avatar" && (

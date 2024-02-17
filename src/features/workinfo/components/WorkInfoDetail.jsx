@@ -4,14 +4,24 @@ import { CalendarIcon, LocationIcon } from "../../../icons";
 import { format } from "date-fns";
 import RatingStar from "../../../components/RatingStar";
 import WorkInfoAction from "./WorkInfoAction";
+import { Link } from "react-router-dom";
 
 function WorkInfoDetail() {
   const { workInfo } = useWorkInfo();
+
   return (
     <div className="col-span-6 flex flex-col py-6 gap-4">
-      <h1 className="text-4xl font-semibold">
-        {workInfo.user?.firstName} {workInfo.user?.lastName}
-      </h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-4xl font-semibold">
+          {workInfo.user?.firstName} {workInfo.user?.lastName}
+        </h1>
+        <Link
+          className="underline"
+          to={`/account/${workInfo?.photographerId}/profile`}
+        >
+          Check out their profile &gt;
+        </Link>
+      </div>
 
       {/* Date */}
       <WorkCardInfo textSize="text-xl">
@@ -40,7 +50,7 @@ function WorkInfoDetail() {
       </div>
 
       <div>
-        <p>{workInfo.description}</p>
+        <p className="break-words">{workInfo.description}</p>
       </div>
 
       {/* Location */}

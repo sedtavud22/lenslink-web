@@ -10,18 +10,19 @@ import { USER_ROLE } from "../constants";
 function Header() {
   const { authUser, logout } = useAuth();
 
+  // Key = path, value = text
   const dropDownLinks =
     authUser?.role === USER_ROLE.Client
       ? {
-          profile: "Profile",
-          requests: "Requests",
-          completed: "Completed Works",
+          Profile: `account/${authUser?.id}/profile`,
+          Requests: `account/${authUser?.id}/request`,
+          "Completed Requests": `account/${authUser?.id}/completed`,
         }
       : {
-          profile: "Profile",
-          myworks: "My Works",
-          requests: "Requests",
-          completed: "Completed Works",
+          Profile: `account/${authUser?.id}/profile`,
+          "My Works": `account/${authUser?.id}/mywork`,
+          Requests: `account/${authUser?.id}/request`,
+          "Completed Requests": `account/${authUser?.id}/completed`,
         };
 
   return (

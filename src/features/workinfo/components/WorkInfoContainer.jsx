@@ -14,7 +14,7 @@ function WorkInfoContainer() {
   return (
     <div>
       <BreadcrumbsTab
-        links={{ "": "Home", work: "Work" }}
+        links={{ Home: "", Work: "work" }}
         currentPage={workInfo.user.firstName}
       />
       <div className="max-w-[1440px] mx-auto">

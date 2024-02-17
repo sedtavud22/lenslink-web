@@ -19,6 +19,7 @@ export default {
         blackText: "#212529",
         grayText: "#6c657d",
         lightGrayText: "#7d7d7d",
+        darkblueishGray: "#c1d2dd",
       },
     },
   },

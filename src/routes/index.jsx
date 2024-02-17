@@ -6,6 +6,13 @@ import CreateWorkPage from "../pages/CreateWorkPage";
 import ProtectedPhotographer from "./ProtectedPhotographer";
 import EditWorkPage from "../pages/EditWorkPage";
 import WorkInfoPage from "../pages/WorkInfoPage";
+import ProfilePage from "../pages/ProfilePage";
+import MyRequestPage from "../pages/MyRequestPage";
+import MyWorkPage from "../pages/MyWorkPage";
+import MyCompletedRequestPage from "../pages/MyCompletedRequestPage";
+import ProtectedOwnAccount from "./ProtectedOwnAccount";
+import AccountContainer from "../layouts/AccountContainer";
+import RequestInfoPage from "../pages/RequestInfoPage";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +24,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "work/",
+        path: "work",
         element: <WorkPage />,
       },
       {
@@ -39,6 +46,46 @@ const router = createBrowserRouter([
             <EditWorkPage />
           </ProtectedPhotographer>
         ),
+      },
+      {
+        path: "account/",
+        element: <AccountContainer />,
+        children: [
+          {
+            path: ":userId/profile",
+            element: <ProfilePage />,
+          },
+          {
+            path: ":userId/mywork",
+            element: (
+              <ProtectedOwnAccount>
+                <ProtectedPhotographer>
+                  <MyWorkPage />
+                </ProtectedPhotographer>
+              </ProtectedOwnAccount>
+            ),
+          },
+          {
+            path: ":userId/request",
+            element: (
+              <ProtectedOwnAccount>
+                <MyRequestPage />
+              </ProtectedOwnAccount>
+            ),
+          },
+          {
+            path: ":userId/completed",
+            element: (
+              <ProtectedOwnAccount>
+                <MyCompletedRequestPage />
+              </ProtectedOwnAccount>
+            ),
+          },
+          {
+            path: "request/:requestId",
+            element: <RequestInfoPage />,
+          },
+        ],
       },
     ],
   },

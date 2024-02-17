@@ -4,10 +4,7 @@ import BreadcrumbsTab from "../layouts/BreadcrumbsTab";
 function CreateWorkPage() {
   return (
     <div>
-      <BreadcrumbsTab
-        links={{ "": "Home", work: "Work" }}
-        currentPage="Create"
-      />
+      <BreadcrumbsTab links={{ Home: "", Work: "work" }} currentPage="Create" />
       <div className="flex flex-col gap-16 max-w-[1440px] mx-auto px-32 py-12 items-center">
         {/* Title */}
         <div className="flex flex-col gap-3">

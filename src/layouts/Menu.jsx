@@ -11,7 +11,7 @@ function Menu() {
         About
       </Link>
       <div className="flex items-center">
-        <Dropdown links={{ work: "Work", blog: "Blog" }}>Services</Dropdown>
+        <Dropdown links={{ Work: "work", Blog: "blog" }}>Services</Dropdown>
       </div>
     </div>
   );
