@@ -36,7 +36,11 @@ function RequestCard({ request }) {
                 {request.work.user?.firstName} {request.work.user?.lastName}
               </p>
             )}
-            <p>{format(request?.createdAt, "PP")}</p>
+            <p>
+              {Object.keys(request).length > 0
+                ? format(request?.createdAt, "PP")
+                : request?.createdAt}
+            </p>
           </div>
         </div>
       </Link>

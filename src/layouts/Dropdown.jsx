@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import DropdownItems from "./DropdownItems";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 function Dropdown({ children, dropDownParent = "default", links, logout }) {
   const classes = {
@@ -15,13 +15,14 @@ function Dropdown({ children, dropDownParent = "default", links, logout }) {
     },
   };
 
+  const dropdownEl = useRef(null);
+
   useEffect(() => {
     const handleClickOutside = (e) => {
-      document.querySelectorAll(".dropdown").forEach(function (dropdown) {
-        if (!dropdown.contains(e.target)) {
-          dropdown.open = false;
-        }
-      });
+      if (dropdownEl.current && !dropdownEl.current.contains(e.target))
+        document
+          .querySelectorAll(".dropdown")
+          .forEach((dropdown) => (dropdown.open = false));
     };
     document.addEventListener("mouseup", handleClickOutside);
     return () => document.removeEventListener("mouseup", handleClickOutside);
@@ -44,7 +45,10 @@ function Dropdown({ children, dropDownParent = "default", links, logout }) {
     //   </li>
     // </ul>
 
-    <details className={classes[dropDownParent].detailsClasses}>
+    <details
+      className={classes[dropDownParent].detailsClasses}
+      ref={dropdownEl}
+    >
       {/* Dropdown Parent */}
       <summary className={classes[dropDownParent].summaryClasses}>
         {children}
