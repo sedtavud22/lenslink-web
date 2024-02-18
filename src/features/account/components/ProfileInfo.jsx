@@ -8,7 +8,7 @@ function ProfileInfo() {
   const { authUser } = useAuth();
   const { profileUser } = useProfile();
   const { userId } = useParams();
-  console.log(profileUser);
+
   return (
     <div className="col-span-8">
       {/* Head */}

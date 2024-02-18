@@ -7,9 +7,7 @@ function RequestCard({ request }) {
   const { authUser } = useAuth();
 
   return (
-    <div>
-      <hr className="border mb-10" />
-
+    <div className="hover:scale-105">
       <Link
         className="flex gap-8 items-center"
         to={`/account/request/${request?.id}`}
@@ -33,7 +31,7 @@ function RequestCard({ request }) {
             )}
             {authUser?.role === USER_ROLE.Client && (
               <p>
-                {request.work.user?.firstName} {request.work.user?.lastName}
+                {request.work?.user?.firstName} {request.work?.user?.lastName}
               </p>
             )}
             <p>

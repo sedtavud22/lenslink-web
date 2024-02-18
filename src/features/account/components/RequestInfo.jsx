@@ -28,7 +28,7 @@ function RequestInfo() {
       </InfoBlock>
 
       <InfoBlock title="Description">{requestInfo?.description}</InfoBlock>
-      <RequestAction />
+      <RequestAction request={requestInfo} />
     </div>
   );
 }

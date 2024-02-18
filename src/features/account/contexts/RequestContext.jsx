@@ -57,9 +57,119 @@ export default function RequestContextProvider({ children }) {
     }
   }, [requestId]);
 
+  const cancelRequest = async (workId) => {
+    try {
+      setLoading(true);
+      const res = await requestApi.cancelRequest(workId);
+      const newUserRequests = [
+        res.data.request,
+        ...userRequests.filter(
+          (request) =>
+            !(
+              request.workId === +workId &&
+              request.status === REQUEST_STATUS.Pending
+            )
+        ),
+      ];
+
+      setUserRequests(newUserRequests);
+      if (requestId) {
+        setRequestInfo(res.data.request);
+      }
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const completeRequest = async (workId) => {
+    try {
+      setLoading(true);
+      const res = await requestApi.completeRequest(workId);
+      const newUserRequests = userRequests.filter(
+        (request) =>
+          !(
+            request.workId === +workId &&
+            request.status === REQUEST_STATUS.Ongoing
+          )
+      );
+      setUserRequests(newUserRequests);
+      setCompletedUserRequests((prev) => [res.data.request, ...prev]);
+      if (requestId) {
+        setRequestInfo(res.data.request);
+      }
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const acceptRequest = async (workId) => {
+    try {
+      setLoading(true);
+      const res = await requestApi.acceptRequest(workId);
+      const newUserRequests = [
+        res.data.request,
+        ...userRequests.filter(
+          (request) =>
+            !(
+              request.workId === +workId &&
+              request.status === REQUEST_STATUS.Pending
+            )
+        ),
+      ];
+      setUserRequests(newUserRequests);
+      setCompletedUserRequests((prev) => [res.data.request, ...prev]);
+      if (requestId) {
+        setRequestInfo(res.data.request);
+      }
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const rejectRequest = async (workId) => {
+    try {
+      setLoading(true);
+      const res = await requestApi.rejectRequest(workId);
+      const newUserRequests = [
+        res.data.request,
+        ...userRequests.filter(
+          (request) =>
+            !(
+              request.workId === +workId &&
+              request.status === REQUEST_STATUS.Pending
+            )
+        ),
+      ];
+      setUserRequests(newUserRequests);
+      setCompletedUserRequests((prev) => [res.data.request, ...prev]);
+      if (requestId) {
+        setRequestInfo(res.data.request);
+      }
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <RequestContext.Provider
-      value={{ userRequests, requestInfo, completedUserRequests, loading }}
+      value={{
+        userRequests,
+        requestInfo,
+        completedUserRequests,
+        loading,
+        cancelRequest,
+        completeRequest,
+        acceptRequest,
+        rejectRequest,
+      }}
     >
       {children}
     </RequestContext.Provider>

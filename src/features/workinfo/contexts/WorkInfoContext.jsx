@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as workApi from "../../../api/work";
 import * as requestApi from "../../../api/request";
 import { toast } from "react-toastify";
@@ -12,7 +12,6 @@ export default function WorkInfoContextProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   const { workId } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWorkInfo = async () => {
@@ -38,20 +37,23 @@ export default function WorkInfoContextProvider({ children }) {
     }
   };
 
-  const cancelRequest = async () => {
+  const cancelRequest = async (workId) => {
     try {
       const res = await requestApi.cancelRequest(workId);
-      const newWorkRequests = workInfo.workRequests
-        .filter(
+      delete res.data.request.user;
+      delete res.data.request.work;
+      const newWorkRequests = [
+        res.data.request,
+        ...workInfo.workRequests.filter(
           (request) =>
             !(
               request.workId === +workId &&
               request.status === REQUEST_STATUS.Pending
             )
-        )
-        .push(res.data.request);
+        ),
+      ];
+
       setWorkInfo((prev) => ({ ...prev, workRequests: newWorkRequests }));
-      navigate("/work");
     } catch (error) {
       toast.error(error.response?.data.message);
     }

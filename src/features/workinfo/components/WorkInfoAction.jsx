@@ -33,7 +33,7 @@ function WorkInfoAction() {
         authUser?.id === request.clientId &&
         request.status === REQUEST_STATUS.Pending
       ) {
-        return <CancelAction />;
+        return <CancelAction workId={workInfo.id} />;
       }
       if (
         authUser?.id === request.clientId &&
