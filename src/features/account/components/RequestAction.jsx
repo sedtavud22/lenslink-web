@@ -10,7 +10,7 @@ function RequestAction({ request }) {
 
   // accept reject cancel complete review
 
-  if (authUser.role === USER_ROLE.Client) {
+  if (authUser?.role === USER_ROLE.Client) {
     if (request.status === REQUEST_STATUS.Pending) {
       return <CancelAction isFromRequestPage={true} workId={request.work.id} />;
     }
@@ -29,7 +29,7 @@ function RequestAction({ request }) {
   }
 
   if (
-    authUser.role === USER_ROLE.Photographer &&
+    authUser?.role === USER_ROLE.Photographer &&
     request.status === REQUEST_STATUS.Pending
   ) {
     return <PhotographerToRequestAction workId={request.work.id} />;

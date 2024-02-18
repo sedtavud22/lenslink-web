@@ -13,6 +13,7 @@ import MyCompletedRequestPage from "../pages/MyCompletedRequestPage";
 import ProtectedOwnAccount from "./ProtectedOwnAccount";
 import AccountContainer from "../layouts/AccountContainer";
 import RequestInfoPage from "../pages/RequestInfoPage";
+import ProtectedRequestInfo from "./ProtectedRequestInfo";
 
 const router = createBrowserRouter([
   {
@@ -83,7 +84,11 @@ const router = createBrowserRouter([
           },
           {
             path: "request/:requestId",
-            element: <RequestInfoPage />,
+            element: (
+              <ProtectedRequestInfo>
+                <RequestInfoPage />
+              </ProtectedRequestInfo>
+            ),
           },
         ],
       },
