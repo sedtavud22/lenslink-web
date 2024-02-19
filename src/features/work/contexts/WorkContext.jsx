@@ -24,7 +24,13 @@ export default function WorkContextProvider({ children }) {
   };
 
   return (
-    <WorkContext.Provider value={{ works, createWork, deleteWork }}>
+    <WorkContext.Provider
+      value={{
+        works,
+        createWork,
+        deleteWork,
+      }}
+    >
       {children}
     </WorkContext.Provider>
   );

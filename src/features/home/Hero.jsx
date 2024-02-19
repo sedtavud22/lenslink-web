@@ -1,12 +1,16 @@
 import { useForm } from "react-hook-form";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import background from "../../assets/mainhero.jpg";
 import Button from "../../components/Button";
 import DateInput from "../../components/DateInput";
+import { format } from "date-fns";
 
 function Hero() {
+  const navigate = useNavigate();
+  let [searchParams, setSearchParams] = useSearchParams({});
+
   const {
-    register,
     handleSubmit,
     control,
     reset,
@@ -14,7 +18,10 @@ function Hero() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const formattedDate = format(data.findDate, "yyyy-MM-dd");
+
+    setSearchParams((prev) => ({ ...prev, searchedDate: formattedDate }));
+    navigate(`/work?searchedDate=${formattedDate}`);
     reset();
   };
 

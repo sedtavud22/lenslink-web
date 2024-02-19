@@ -3,11 +3,9 @@ import { USER_ROLE } from "../../../constants";
 import useAuth from "../../../hooks/use-auth";
 import { Link } from "react-router-dom";
 import WorkCard from "./WorkCard";
-import useWork from "../hooks/use-work";
 
-function WorkList() {
+function WorkList({ filteredWorks }) {
   const { authUser } = useAuth();
-  const { works } = useWork();
 
   return (
     <div className="py-14 px-24 flex flex-col items-center">
@@ -22,7 +20,7 @@ function WorkList() {
 
       {/* WorkCards */}
       <div className="grid grid-cols-3 gap-x-12 gap-y-16">
-        {works.map((el) => (
+        {filteredWorks?.map((el) => (
           <WorkCard key={el.id} work={el} />
         ))}
       </div>
