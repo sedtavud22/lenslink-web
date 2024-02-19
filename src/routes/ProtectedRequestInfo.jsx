@@ -6,13 +6,15 @@ function ProtectedRequestInfo({ children }) {
   const { authUser } = useAuth();
   const { requestInfo } = useRequest();
 
-  return authUser &&
-    (authUser?.id === requestInfo?.clientId ||
-      authUser?.id === requestInfo.work?.photographerId) ? (
-    children
-  ) : (
-    <Navigate to="/" />
-  );
+  if (Object.keys(requestInfo).length > 0) {
+    return authUser &&
+      (authUser?.id === requestInfo.clientId ||
+        authUser?.id === requestInfo.work?.photographerId) ? (
+      children
+    ) : (
+      <Navigate to="/" />
+    );
+  }
 }
 
 export default ProtectedRequestInfo;

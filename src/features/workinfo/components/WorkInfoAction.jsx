@@ -39,7 +39,7 @@ function WorkInfoAction() {
         authUser?.id === request.clientId &&
         request.status === REQUEST_STATUS.Ongoing
       ) {
-        return <CompleteAction />;
+        return null;
       }
     }
   }
