@@ -17,7 +17,7 @@ function WorkInfoAction() {
   ) {
     return (
       <div className="flex gap-4">
-        <EditAction />
+        <EditAction workId={workInfo.id} />
         <DeleteAction />
       </div>
     );

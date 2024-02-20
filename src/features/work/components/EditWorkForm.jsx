@@ -1,25 +1,44 @@
+import { useForm } from "react-hook-form";
 import Button from "../../../components/Button";
-import useCreateWorkForm from "../hooks/use-create-work-form";
 import DateInput from "../../../components/DateInput";
 import TextArea from "../../../components/TextArea";
+import useWorkInfo from "../../workinfo/hooks/use-workinfo";
 import PictureForm from "./PictureForm";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import useWork from "../hooks/use-work";
+import { joiResolver } from "@hookform/resolvers/joi";
+import workSchema from "../schemas/work-schema";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../../components/Loading";
-import { useNavigate } from "react-router-dom";
 import SubImageForm from "./SubImageForm";
 import AddSubImageForm from "./AddSubImageForm";
+import OldSubImageForm from "./OldSubImageForm";
+import { toast } from "react-toastify";
+import useWork from "../hooks/use-work";
 
-function CreateWorkForm() {
+function EditWorkForm() {
+  const { updateWork } = useWork();
+  const { workInfo, loading } = useWorkInfo();
   const [cardImage, setCardImage] = useState(null);
-  const [subImages, setSubImages] = useState([]);
+  const [oldSubImages, setOldSubImages] = useState([]);
+  const [deletedOldSubImagesId, setDeletedOldSubImagesId] = useState([]);
+  const [newSubImages, setNewSubImages] = useState([]);
   const [errorImage, setErrorImage] = useState({});
-  const [loading, setLoading] = useState(false);
-  console.log(subImages);
-  const { createWork } = useWork();
+  const [sendFormLoading, setSendFormLoading] = useState(false);
+
+  const { workId } = useParams();
 
   const navigate = useNavigate();
+
+  const defaultValues = {
+    description: workInfo.description,
+    firstAvailableDate: workInfo.firstAvailableDate,
+    lastAvailableDate: workInfo.lastAvailableDate,
+  };
+
+  useEffect(() => {
+    reset(defaultValues);
+    setOldSubImages(workInfo?.workImages);
+  }, [workInfo]);
 
   const {
     register,
@@ -27,61 +46,86 @@ function CreateWorkForm() {
     reset,
     control,
     formState: { errors },
-  } = useCreateWorkForm();
+  } = useForm({
+    resolver: joiResolver(workSchema),
+    defaultValues: defaultValues,
+  });
 
   const onAddSubImage = (subImage) => {
-    setSubImages((prev) => [...prev, subImage]);
+    setNewSubImages((prev) => [...prev, subImage]);
   };
 
   const onUpdateSubImage = (subImage, index) => {
-    setSubImages((prev) => {
+    setNewSubImages((prev) => {
       const nextState = [...prev];
       nextState[index] = subImage;
       return nextState;
     });
   };
 
+  const onChangeOldSubImage = (subImage, id) => {
+    setOldSubImages((prev) => prev.filter((el) => el.id !== id));
+    setDeletedOldSubImagesId((prev) => [...prev, id]);
+    setNewSubImages((prev) => [subImage, ...prev]);
+  };
+
+  const onDeleteOldSubImage = (id) => {
+    setOldSubImages((prev) => prev.filter((el) => el.id !== id));
+    setDeletedOldSubImagesId((prev) => [...prev, id]);
+  };
+
   const onDeleteSubImage = (index) => {
-    setSubImages((prev) => prev.filter((el, i) => i !== index));
+    setNewSubImages((prev) => prev.filter((el, i) => i !== index));
   };
 
   const onSubmit = async (data) => {
     try {
-      if (!cardImage) {
-        return setErrorImage((prev) => ({
-          ...prev,
-          cardImage: "Main image is required",
-        }));
-      }
+      console.log(data);
 
       const formData = new FormData();
       formData.append("description", data.description);
       formData.append("firstAvailableDate", data.firstAvailableDate);
       formData.append("lastAvailableDate", data.lastAvailableDate);
-      formData.append("cardImage", cardImage);
 
-      if (subImages.length > 0) {
-        subImages.forEach((subImage) => formData.append("subImages", subImage));
+      if (cardImage) {
+        formData.append("cardImage", cardImage);
       }
 
-      setLoading(true);
+      if (newSubImages.length > 0) {
+        newSubImages.forEach((subImage) =>
+          formData.append("subImages", subImage)
+        );
+      }
 
-      await createWork(formData);
+      if (deletedOldSubImagesId.length > 0) {
+        deletedOldSubImagesId.forEach((id) =>
+          formData.append("deletedOldSubImagesId", id)
+        );
+      }
+
+      setSendFormLoading(true);
+
+      await updateWork(formData, workId);
       reset();
       setCardImage(null);
-      setSubImages([]);
-      toast.success("Successfully create work");
+      setDeletedOldSubImagesId([]);
+      setNewSubImages([]);
+      toast.success("Successfully updated work");
       navigate("/work");
     } catch (error) {
       toast.error(error.response?.data.message);
     } finally {
-      setLoading(false);
+      setSendFormLoading(false);
     }
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      {loading && <Loading />}
+      {sendFormLoading && <Loading />}
       <form
         className="form-control gap-10 w-[50%]"
         onSubmit={handleSubmit(onSubmit)}
@@ -131,14 +175,25 @@ function CreateWorkForm() {
             setImage={setCardImage}
             errorImage={errorImage.cardImage}
             setErrorImage={setErrorImage}
+            initialSrc={workInfo?.cardImageUrl}
           />
         </div>
 
         {/* Pictures */}
         <div className="flex flex-col gap-4">
           <h1 className="font-semibold text-center">Sub Pictures (Optional)</h1>
+
           <div className="flex flex-col gap-4">
-            {subImages.map((subImage, index) => (
+            {oldSubImages?.map((subImage) => (
+              <OldSubImageForm
+                key={subImage.id}
+                subImage={subImage}
+                onChangeOldSubImage={onChangeOldSubImage}
+                onDeleteOldSubImage={onDeleteOldSubImage}
+              />
+            ))}
+
+            {newSubImages.map((subImage, index) => (
               <SubImageForm
                 subImage={subImage}
                 key={index}
@@ -147,7 +202,7 @@ function CreateWorkForm() {
                 index={index}
               />
             ))}
-            {subImages.length < 3 && (
+            {oldSubImages?.length + newSubImages.length < 3 && (
               <AddSubImageForm onAddSubImage={onAddSubImage} />
             )}
           </div>
@@ -159,4 +214,4 @@ function CreateWorkForm() {
   );
 }
 
-export default CreateWorkForm;
+export default EditWorkForm;

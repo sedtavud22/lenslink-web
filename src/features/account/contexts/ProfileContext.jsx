@@ -30,7 +30,7 @@ export default function ProfileContextProvider({ children }) {
   }, [userId]);
 
   useEffect(() => {
-    if (authUser.id === +userId) setProfileUser(authUser);
+    if (authUser?.id === +userId) setProfileUser(authUser);
   }, [authUser]);
 
   return (

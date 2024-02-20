@@ -7,6 +7,7 @@ import useAuth from "../../../hooks/use-auth";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import DeleteAction from "../../../components/action-buttons/DeleteAction";
+import EditAction from "../../../components/action-buttons/EditAction";
 
 function WorkCard({ work }) {
   const { authUser } = useAuth();
@@ -59,9 +60,7 @@ function WorkCard({ work }) {
         {/* Own Work Card Button Group */}
         {authUser?.id === work.photographerId && (
           <div className="flex gap-4">
-            <Button bg="accent" width="35">
-              Edit
-            </Button>
+            <EditAction workId={work.id} />
             <div>
               <DeleteAction id={work.id} />
             </div>

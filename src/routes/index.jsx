@@ -14,6 +14,7 @@ import ProtectedOwnAccount from "./ProtectedOwnAccount";
 import AccountContainer from "../layouts/AccountContainer";
 import RequestInfoPage from "../pages/RequestInfoPage";
 import ProtectedRequestInfo from "./ProtectedRequestInfo";
+import ProtectedEditOwnWork from "./ProtectedEditOwnWork";
 
 const router = createBrowserRouter([
   {
@@ -43,9 +44,11 @@ const router = createBrowserRouter([
       {
         path: "edit/:workId",
         element: (
-          <ProtectedPhotographer>
-            <EditWorkPage />
-          </ProtectedPhotographer>
+          <ProtectedEditOwnWork>
+            <ProtectedPhotographer>
+              <EditWorkPage />
+            </ProtectedPhotographer>
+          </ProtectedEditOwnWork>
         ),
       },
       {

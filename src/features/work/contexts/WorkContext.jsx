@@ -18,6 +18,12 @@ export default function WorkContextProvider({ children }) {
     setWorks((prev) => [res.data.work, ...prev]);
   };
 
+  const updateWork = async (formData, workId) => {
+    const res = await workApi.updateWork(formData, workId);
+    console.log(res.data);
+    setWorks((prev) => [res.data.work, ...prev]);
+  };
+
   const deleteWork = async (workId) => {
     const res = await workApi.deleteWork(workId);
     setWorks(res.data.works);
@@ -28,6 +34,7 @@ export default function WorkContextProvider({ children }) {
       value={{
         works,
         createWork,
+        updateWork,
         deleteWork,
       }}
     >

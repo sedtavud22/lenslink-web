@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import Button from "../Button";
 
-function EditAction() {
+function EditAction({ workId }) {
   return (
-    <div>
+    <Link to={`/edit/${workId}`}>
       <Button bg="accent">Edit</Button>
-    </div>
+    </Link>
   );
 }
 

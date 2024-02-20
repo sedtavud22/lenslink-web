@@ -29,28 +29,12 @@ function Dropdown({ children, dropDownParent = "default", links, logout }) {
   }, []);
 
   return (
-    // <ul className="menu menu-horizontal text-base">
-    //   <li>
-    //     <details>
-    //       <summary className="hover:bg-secondary py-3 px-6">{children}</summary>
-    //       <ul className="bg-base-100 rounded-t-none">
-    //         {links &&
-    //           Object.entries(links).map((el, index) => (
-    //             <li key={index} className="w-36">
-    //               <Link to={`/${el[0]}`}>{el[1]}</Link>
-    //             </li>
-    //           ))}
-    //       </ul>
-    //     </details>
-    //   </li>
-    // </ul>
-
-    <details
-      className={classes[dropDownParent].detailsClasses}
-      ref={dropdownEl}
-    >
+    <details className={classes[dropDownParent].detailsClasses}>
       {/* Dropdown Parent */}
-      <summary className={classes[dropDownParent].summaryClasses}>
+      <summary
+        className={classes[dropDownParent].summaryClasses}
+        ref={dropdownEl}
+      >
         {children}
       </summary>
 
