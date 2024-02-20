@@ -19,6 +19,6 @@ const workSchema = Joi.object({
         "Last available date must be later than first available date",
       "any.required": "Last available date is required",
     }),
-}).unknown(true);
+});
 
 export default workSchema;

@@ -4,7 +4,7 @@ import useAuth from "../../../hooks/use-auth";
 import Avatar from "../../../components/Avatar";
 import useProfile from "../hooks/use-profile";
 
-function ProfileInfo() {
+function ProfileInfo({ toggleEdit }) {
   const { authUser } = useAuth();
   const { profileUser } = useProfile();
   const { userId } = useParams();
@@ -14,12 +14,12 @@ function ProfileInfo() {
       {/* Head */}
       <div className="flex justify-between">
         <h1 className="text-3xl font-semibold">Profile</h1>
-        {authUser?.id === +userId && <Button>Edit</Button>}
+        {authUser?.id === +userId && <Button onClick={toggleEdit}>Edit</Button>}
       </div>
 
       {/* Avatar & Detail */}
       <div className="flex gap-12 pt-4">
-        <Avatar size={8} src={authUser?.profileImage} />
+        <Avatar size={8} src={profileUser.profileImage} />
         <div className="flex flex-col gap-1">
           <h3 className="text-2xl font-medium">
             {profileUser.firstName} {profileUser.lastName}

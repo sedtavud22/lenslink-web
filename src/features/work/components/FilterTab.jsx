@@ -54,7 +54,7 @@ function FilterTab({ searchParams, setSearchParams, filteredWorks }) {
           />
           <SearchIcon className="w-4 h-4 fill-lightGrayText -ml-8 z-10" />
         </div>
-        <Button>Submit</Button>
+        <Button px="px-6">Filter</Button>
       </form>
       {/* Right */}
       <div className="justify-self-end col-span-3">

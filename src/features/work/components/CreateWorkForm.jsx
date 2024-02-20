@@ -14,6 +14,7 @@ function CreateWorkForm() {
   const [subImage1, setsubImage1] = useState(null);
   const [subImage2, setsubImage2] = useState(null);
   const [subImage3, setsubImage3] = useState(null);
+  const [errorImage, setErrorImage] = useState({});
   const [loading, setLoading] = useState(false);
 
   const { createWork } = useWork();
@@ -24,7 +25,6 @@ function CreateWorkForm() {
     register,
     handleSubmit,
     reset,
-    setError,
     control,
     formState: { errors },
   } = useCreateWorkForm();
@@ -32,10 +32,10 @@ function CreateWorkForm() {
   const onSubmit = async (data) => {
     try {
       if (!cardImage) {
-        setError("cardImage", {
-          type: "custom",
-          message: "Please upload card image",
-        });
+        return setErrorImage((prev) => ({
+          ...prev,
+          cardImage: "Main image is required",
+        }));
       }
 
       const formData = new FormData();
@@ -117,22 +117,25 @@ function CreateWorkForm() {
         <div className="flex flex-col gap-4">
           <h1 className="font-semibold text-center">Main Picture</h1>
           <PictureForm
-            register={register}
-            name="cardImage"
             image={cardImage}
+            name="cardImage"
             setImage={setCardImage}
+            errorImage={errorImage.cardImage}
+            setErrorImage={setErrorImage}
           />
         </div>
 
         {/* Pictures */}
         <div className="flex flex-col gap-4">
-          <h1 className="font-semibold text-center">Sub Pictures</h1>
-          <div className="flex justify-between">
+          <h1 className="font-semibold text-center">Sub Pictures (Optional)</h1>
+          <div className="flex flex-col gap-4">
             <PictureForm
               register={register}
               name="subImage1"
               image={subImage1}
               setImage={setsubImage1}
+              errorImage={errorImage.subImage1}
+              setErrorImage={setErrorImage}
             />
 
             <PictureForm
@@ -140,6 +143,8 @@ function CreateWorkForm() {
               name="subImage2"
               image={subImage2}
               setImage={setsubImage2}
+              errorImage={errorImage.subImage2}
+              setErrorImage={setErrorImage}
             />
 
             <PictureForm
@@ -147,6 +152,8 @@ function CreateWorkForm() {
               name="subImage3"
               image={subImage3}
               setImage={setsubImage3}
+              errorImage={errorImage.subImage3}
+              setErrorImage={setErrorImage}
             />
           </div>
         </div>

@@ -1,28 +1,30 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { ImageIcon } from "../../../icons";
 
-function PictureForm({ initialSrc, register, name, errors, image, setImage }) {
+function PictureForm({
+  initialSrc,
+  name,
+  image,
+  setImage,
+  errorImage,
+  setErrorImage,
+}) {
   const fileEl = useRef(null);
 
-  const { ref: registerRef, ...rest } = register(name);
-
-  const handleUploadedFile = (event) => {
-    const file = event.target.files[0];
-
-    setImage(file);
+  const handleUploadedFile = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+      setErrorImage((prev) => ({ ...prev, [name]: null }));
+      fileEl.current.value = "";
+    }
   };
-
   return (
     <div className="w-full">
       <input
         type="file"
         className="hidden"
-        {...rest}
         onChange={handleUploadedFile}
-        ref={(e) => {
-          registerRef(e);
-          fileEl.current = e;
-        }}
+        ref={fileEl}
       />
       {image ? (
         <div
@@ -78,9 +80,7 @@ function PictureForm({ initialSrc, register, name, errors, image, setImage }) {
           <span>Browse</span>
         </div>
       )}
-      {errors?.[name] && (
-        <small className="text-error">{errors?.[name].message}</small>
-      )}
+      {errorImage && <small className="text-error">{errorImage}</small>}
     </div>
   );
 }

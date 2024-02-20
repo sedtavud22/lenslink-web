@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { clearToken, getToken, storeToken } from "../../../utils/local-storage";
 
 import * as authApi from "../../../api/auth";
+import * as userApi from "../../../api/user";
 import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
@@ -37,9 +38,21 @@ export default function AuthContextProvider({ children }) {
     clearToken();
   };
 
+  const updateUser = async (data) => {
+    const res = await userApi.updateUser(data);
+    setAuthUser(res.data.user);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ registerUser, login, logout, authUser, initialLoading }}
+      value={{
+        registerUser,
+        login,
+        logout,
+        authUser,
+        initialLoading,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
