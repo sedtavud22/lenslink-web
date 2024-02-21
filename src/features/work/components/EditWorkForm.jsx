@@ -80,8 +80,6 @@ function EditWorkForm() {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
-
       const formData = new FormData();
       formData.append("description", data.description);
       formData.append("firstAvailableDate", data.firstAvailableDate);

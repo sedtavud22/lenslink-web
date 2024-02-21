@@ -5,6 +5,7 @@ import WorkList from "../features/work/components/WorkList";
 import { useEffect } from "react";
 import useWork from "../features/work/hooks/use-work";
 import { isAfter, isBefore } from "date-fns";
+import Loading from "../components/Loading";
 
 function WorkPage() {
   let [searchParams, setSearchParams] = useSearchParams({});
@@ -15,7 +16,11 @@ function WorkPage() {
     }
   }, []);
 
-  const { works } = useWork();
+  const { works, loading } = useWork();
+
+  if (loading) {
+    return <Loading />;
+  }
 
   let filteredWorks = works;
 

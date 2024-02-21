@@ -1,4 +1,3 @@
-import Button from "../../../components/Button";
 import RatingStar from "../../../components/RatingStar";
 import { CalendarIcon, LocationIcon, UserIcon } from "../../../icons";
 import WorkCardImage from "./WorkCardImage";
@@ -15,7 +14,7 @@ function WorkCard({ work }) {
   return (
     <div className="card w-96 bg-secondary shadow-xl hover:scale-105">
       <Link to={`/work/${work.id}`}>
-        <WorkCardImage src={work.cardImageUrl} />
+        <WorkCardImage src={work?.cardImageUrl} />
         <div className="pb-8"></div>
       </Link>
       <div className="card-body pt-0">
@@ -23,7 +22,7 @@ function WorkCard({ work }) {
         <Link to={`/work/${work.id}`}>
           <div>
             <h2 className="card-title text-2xl">
-              <p>{work.user.firstName}</p>
+              <p>{work.user?.firstName}</p>
               <div className="flex items-center">
                 <RatingStar size={1.5} />
                 <RatingStar size={1.5} />
@@ -36,7 +35,7 @@ function WorkCard({ work }) {
               {/* Date */}
               <WorkCardInfo>
                 <CalendarIcon className="w-4 h-4 fill-lightGrayText" />
-                <p>{`${format(work.firstAvailableDate, "dd/MM/yy")} - ${format(
+                <p>{`${format(work?.firstAvailableDate, "dd/MM/yy")} - ${format(
                   work?.lastAvailableDate,
                   "dd/MM/yy"
                 )}`}</p>
@@ -44,21 +43,21 @@ function WorkCard({ work }) {
 
               <WorkCardInfo>
                 <UserIcon className="w-4 h-4 fill-lightGrayText" />
-                <p>{`${work.workRequests.length} clients so far`}</p>
+                <p>{`${work.workRequests?.length} clients so far`}</p>
               </WorkCardInfo>
             </div>
             <div className="flex flex-wrap items-center justify-between">
               {/* Location */}
               <div className="flex items-center gap-2 min-h-12">
                 <LocationIcon className="w-4 h-4 fill-lightGrayText" />
-                <p>{work.user.province}</p>
+                <p>{work.user?.province}</p>
               </div>
             </div>
           </div>
         </Link>
 
         {/* Own Work Card Button Group */}
-        {authUser?.id === work.photographerId && (
+        {authUser?.id === work?.photographerId && (
           <div className="flex gap-4">
             <EditAction workId={work.id} />
             <div>

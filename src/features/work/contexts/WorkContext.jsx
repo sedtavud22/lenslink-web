@@ -5,12 +5,15 @@ export const WorkContext = createContext();
 
 export default function WorkContextProvider({ children }) {
   const [works, setWorks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     workApi
       .getAllWorks()
       .then((res) => setWorks(res.data.works))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   }, []);
 
   const createWork = async (formData) => {
@@ -20,8 +23,11 @@ export default function WorkContextProvider({ children }) {
 
   const updateWork = async (formData, workId) => {
     const res = await workApi.updateWork(formData, workId);
-    console.log(res.data);
-    setWorks((prev) => [res.data.work, ...prev]);
+    const newWorks = [
+      res.data.work,
+      ...works.filter((work) => work.id !== res.data.work.id),
+    ];
+    setWorks(newWorks);
   };
 
   const deleteWork = async (workId) => {
@@ -33,6 +39,7 @@ export default function WorkContextProvider({ children }) {
     <WorkContext.Provider
       value={{
         works,
+        loading,
         createWork,
         updateWork,
         deleteWork,

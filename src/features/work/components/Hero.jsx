@@ -13,7 +13,7 @@ function Hero() {
     >
       <div className="flex flex-col gap-2 items-center">
         <h1 className="text-4xl font-semibold">Works</h1>
-        <Breadcrumbs links={{ "": "Home" }} currentPage="Work" />
+        <Breadcrumbs links={{ Home: "" }} currentPage="Work" />
       </div>
     </div>
   );
