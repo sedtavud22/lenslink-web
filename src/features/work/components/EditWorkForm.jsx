@@ -11,7 +11,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../../components/Loading";
 import SubImageForm from "./SubImageForm";
 import AddSubImageForm from "./AddSubImageForm";
-import OldSubImageForm from "./OldSubImageForm";
 import { toast } from "react-toastify";
 import useWork from "../hooks/use-work";
 
@@ -19,7 +18,6 @@ function EditWorkForm() {
   const { updateWork } = useWork();
   const { workInfo, loading } = useWorkInfo();
   const [cardImage, setCardImage] = useState(null);
-  const [oldSubImages, setOldSubImages] = useState([]);
   const [deletedOldSubImagesId, setDeletedOldSubImagesId] = useState([]);
   const [newSubImages, setNewSubImages] = useState([]);
   const [errorImage, setErrorImage] = useState({});
@@ -37,7 +35,7 @@ function EditWorkForm() {
 
   useEffect(() => {
     reset(defaultValues);
-    setOldSubImages(workInfo?.workImages);
+    setNewSubImages(workInfo?.workImages);
   }, [workInfo]);
 
   const {
@@ -55,7 +53,11 @@ function EditWorkForm() {
     setNewSubImages((prev) => [...prev, subImage]);
   };
 
-  const onUpdateSubImage = (subImage, index) => {
+  const onUpdateSubImage = (subImage, index, id) => {
+    if (id) {
+      setDeletedOldSubImagesId((prev) => [...prev, id]);
+    }
+
     setNewSubImages((prev) => {
       const nextState = [...prev];
       nextState[index] = subImage;
@@ -63,19 +65,11 @@ function EditWorkForm() {
     });
   };
 
-  const onChangeOldSubImage = (subImage, id) => {
-    setOldSubImages((prev) => prev.filter((el) => el.id !== id));
-    setDeletedOldSubImagesId((prev) => [...prev, id]);
-    setNewSubImages((prev) => [subImage, ...prev]);
-  };
-
-  const onDeleteOldSubImage = (id) => {
-    setOldSubImages((prev) => prev.filter((el) => el.id !== id));
-    setDeletedOldSubImagesId((prev) => [...prev, id]);
-  };
-
-  const onDeleteSubImage = (index) => {
+  const onDeleteSubImage = (index, id) => {
     setNewSubImages((prev) => prev.filter((el, i) => i !== index));
+    if (id) {
+      setDeletedOldSubImagesId((prev) => [...prev, id]);
+    }
   };
 
   const onSubmit = async (data) => {
@@ -90,8 +84,8 @@ function EditWorkForm() {
       }
 
       if (newSubImages.length > 0) {
-        newSubImages.forEach((subImage) =>
-          formData.append("subImages", subImage)
+        newSubImages.forEach(
+          (subImage) => !subImage.id && formData.append("subImages", subImage)
         );
       }
 
@@ -177,30 +171,21 @@ function EditWorkForm() {
           />
         </div>
 
-        {/* Pictures */}
+        {/* Sub Pictures */}
         <div className="flex flex-col gap-4">
           <h1 className="font-semibold text-center">Sub Pictures (Optional)</h1>
 
           <div className="flex flex-col gap-4">
-            {oldSubImages?.map((subImage) => (
-              <OldSubImageForm
-                key={subImage.id}
-                subImage={subImage}
-                onChangeOldSubImage={onChangeOldSubImage}
-                onDeleteOldSubImage={onDeleteOldSubImage}
-              />
-            ))}
-
-            {newSubImages.map((subImage, index) => (
+            {newSubImages?.map((subImage, index) => (
               <SubImageForm
-                subImage={subImage}
                 key={index}
+                subImage={subImage}
                 onUpdateSubImage={onUpdateSubImage}
                 onDeleteSubImage={onDeleteSubImage}
                 index={index}
               />
             ))}
-            {oldSubImages?.length + newSubImages.length < 3 && (
+            {newSubImages?.length < 3 && (
               <AddSubImageForm onAddSubImage={onAddSubImage} />
             )}
           </div>

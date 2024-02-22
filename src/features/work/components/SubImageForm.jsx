@@ -1,13 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 function SubImageForm({ onUpdateSubImage, onDeleteSubImage, subImage, index }) {
-  // const [image, setImage] = useState(subImage || null);
   const fileEl = useRef(null);
 
   const handleUploadedFile = (e) => {
     if (e.target.files[0]) {
-      // setImage(e.target.files[0]);
-      onUpdateSubImage(e.target.files[0], index);
+      if (subImage.id) {
+        onUpdateSubImage(e.target.files[0], index);
+      } else {
+        onUpdateSubImage(e.target.files[0], index, subImage.id);
+      }
       fileEl.current.value = "";
     }
   };
@@ -26,7 +28,7 @@ function SubImageForm({ onUpdateSubImage, onDeleteSubImage, subImage, index }) {
         onClick={() => fileEl.current.click()}
       >
         <img
-          src={URL.createObjectURL(subImage)}
+          src={subImage.imageUrl || URL.createObjectURL(subImage)}
           alt="cardImg"
           className="mx-auto aspect-[4/3] object-cover"
         />
@@ -36,7 +38,11 @@ function SubImageForm({ onUpdateSubImage, onDeleteSubImage, subImage, index }) {
           className="absolute top-0.5 right-1 font-black"
           onClick={(e) => {
             e.stopPropagation();
-            onDeleteSubImage(index);
+            if (subImage.id) {
+              onDeleteSubImage(index, subImage.id);
+            } else {
+              onDeleteSubImage(index);
+            }
             fileEl.current.value = "";
           }}
           role="button"
