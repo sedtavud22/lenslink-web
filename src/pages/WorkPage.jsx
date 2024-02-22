@@ -2,13 +2,14 @@ import { useSearchParams } from "react-router-dom";
 import FilterTab from "../features/work/components/FilterTab";
 import Hero from "../features/work/components/Hero";
 import WorkList from "../features/work/components/WorkList";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useWork from "../features/work/hooks/use-work";
 import { isAfter, isBefore } from "date-fns";
 import Loading from "../components/Loading";
 
 function WorkPage() {
   let [searchParams, setSearchParams] = useSearchParams({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (!searchParams.get("searchedDate")) {
@@ -22,15 +23,9 @@ function WorkPage() {
     return <Loading />;
   }
 
-  let filteredWorks = works;
-
-  if (searchParams.get("firstName")) {
-    filteredWorks = works.filter((work) =>
-      work.user?.firstName
-        .toLowerCase()
-        .includes(searchParams.get("firstName").toLowerCase())
-    );
-  }
+  let filteredWorks = works.filter((work) =>
+    work.user?.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (searchParams.get("date")) {
     filteredWorks = filteredWorks.filter(
@@ -48,6 +43,10 @@ function WorkPage() {
     );
   }
 
+  const handleFilter = (string) => {
+    setSearchTerm(string);
+  };
+
   return (
     <div className="max-w-[1440px] mx-auto">
       <Hero />
@@ -55,8 +54,10 @@ function WorkPage() {
         searchParams={searchParams}
         setSearchParams={setSearchParams}
         filteredWorks={filteredWorks}
+        searchTerm={searchTerm}
+        handleFilter={handleFilter}
       />
-      <WorkList searchParams={searchParams} filteredWorks={filteredWorks} />
+      <WorkList filteredWorks={filteredWorks} />
     </div>
   );
 }
