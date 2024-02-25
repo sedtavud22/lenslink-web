@@ -49,7 +49,6 @@ function EditProfileForm({ closeEdit }) {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data.profileInfo);
       const formData = new FormData();
       if (image) {
         formData.append("profileImage", image);
