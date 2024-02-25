@@ -4,7 +4,7 @@ import Hero from "../features/work/components/Hero";
 import WorkList from "../features/work/components/WorkList";
 import { useEffect, useState } from "react";
 import useWork from "../features/work/hooks/use-work";
-import { isAfter, isBefore } from "date-fns";
+import { addDays, isAfter, isBefore } from "date-fns";
 import Loading from "../components/Loading";
 
 function WorkPage() {
@@ -12,7 +12,9 @@ function WorkPage() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    if (!searchParams.get("searchedDate")) {
+    if (searchParams.get("searchedDate")) {
+      setSearchParams({ date: searchParams.get("searchedDate") });
+    } else {
       setSearchParams({});
     }
   }, []);
@@ -31,15 +33,7 @@ function WorkPage() {
     filteredWorks = filteredWorks.filter(
       (work) =>
         isAfter(searchParams.get("date"), work.firstAvailableDate) &&
-        isBefore(searchParams.get("date"), work.lastAvailableDate)
-    );
-  }
-
-  if (searchParams.get("searchedDate")) {
-    filteredWorks = filteredWorks.filter(
-      (work) =>
-        isAfter(searchParams.get("searchedDate"), work.firstAvailableDate) &&
-        isBefore(searchParams.get("searchedDate"), work.lastAvailableDate)
+        isBefore(searchParams.get("date"), addDays(work.lastAvailableDate, 1))
     );
   }
 

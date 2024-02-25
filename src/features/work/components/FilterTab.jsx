@@ -22,7 +22,7 @@ function FilterTab({
       <form className="text-sm flex gap-4 items-center col-span-6">
         <Input
           type="date"
-          value={searchParams.get("date")}
+          value={searchParams.get("date") || ""}
           onChange={(e) => {
             setSearchParams({ date: e.target.value });
           }}
@@ -38,7 +38,7 @@ function FilterTab({
       </form>
       {/* Right */}
       <div className="justify-self-end col-span-3">
-        Showing {filteredWorks.length} out of {works.length} results
+        Showing {filteredWorks.length} out of {works.length} works
       </div>
     </div>
   );

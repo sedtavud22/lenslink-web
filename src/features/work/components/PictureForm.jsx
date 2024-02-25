@@ -43,6 +43,7 @@ function PictureForm({
               setImage(null);
               fileEl.current.value = "";
             }}
+            type="button"
           >
             &#10005;
           </button>
@@ -63,7 +64,12 @@ function PictureForm({
               e.stopPropagation();
               setImage(null);
               fileEl.current.value = "";
+              setErrorImage((prev) => ({
+                ...prev,
+                cardImage: "Main picture can be edited but not deleted",
+              }));
             }}
+            type="button"
           >
             &#10005;
           </button>

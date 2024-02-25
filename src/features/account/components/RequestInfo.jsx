@@ -16,9 +16,9 @@ function RequestInfo() {
         </InfoBlock>
 
         <InfoBlock title="Date">
-          {Object.keys(requestInfo).length > 0
-            ? format(requestInfo.createdAt, "PP")
-            : requestInfo?.createdAt}
+          {requestInfo.date
+            ? format(requestInfo.date, "PP")
+            : requestInfo?.date}
         </InfoBlock>
       </div>
 

@@ -25,7 +25,7 @@ function SendRequestForm() {
   const excludedDates = workInfo.workRequests
     .filter(
       (request) =>
-        request.status === REQUEST_STATUS.Ongoing &&
+        request.status === REQUEST_STATUS.Ongoing ||
         request.status === REQUEST_STATUS.Completed
     )
     .map((request) => request.date);

@@ -18,7 +18,7 @@ const editProfileSchema = Joi.object({
   province: Joi.string()
     .required()
     .messages({ "string.empty": "Please select your province" }),
-  profileInfo: Joi.string().allow(""),
+  profileInfo: Joi.string().trim().allow(""),
 });
 
 export default editProfileSchema;

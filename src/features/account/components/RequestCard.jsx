@@ -35,7 +35,7 @@ function RequestCard({ request }) {
               </p>
             )}
             <p>
-              {Object.keys(request).length > 0
+              {request.createdAt
                 ? format(request?.createdAt, "PP")
                 : request?.createdAt}
             </p>

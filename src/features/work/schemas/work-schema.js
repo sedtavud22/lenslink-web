@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const workSchema = Joi.object({
-  description: Joi.string().required().messages({
+  description: Joi.string().trim().required().messages({
     "string.empty": "Description is required",
     "any.required": "Description is required",
   }),

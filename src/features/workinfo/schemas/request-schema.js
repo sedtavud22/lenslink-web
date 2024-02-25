@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const requestSchema = Joi.object({
-  description: Joi.string().allow(""),
+  description: Joi.string().trim().allow(""),
   date: Joi.date().required().messages({
     "date.base": "Invalid date",
     "any.required": "Date is required",
@@ -14,7 +14,7 @@ const requestSchema = Joi.object({
       "string.empty": "Client mobile number is required",
       "any.required": "Client mobile number is required",
     }),
-  clientSocialMedia: Joi.string().allow(""),
+  clientSocialMedia: Joi.string().trim().allow(""),
 });
 
 export default requestSchema;

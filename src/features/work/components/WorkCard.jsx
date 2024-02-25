@@ -7,12 +7,19 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import DeleteAction from "../../../components/action-buttons/DeleteAction";
 import EditAction from "../../../components/action-buttons/EditAction";
+import { REQUEST_STATUS } from "../../../constants";
 
 function WorkCard({ work }) {
   const { authUser } = useAuth();
 
+  const clientsSoFar = work.workRequests.filter(
+    (req) =>
+      req.status === REQUEST_STATUS.Ongoing ||
+      req.status === REQUEST_STATUS.Completed
+  );
+
   return (
-    <div className="card w-96 bg-secondary shadow-xl hover:scale-105">
+    <div className="card w-96 bg-secondary shadow-xl hover:scale-105 transition">
       <Link to={`/work/${work.id}`}>
         <WorkCardImage src={work?.cardImageUrl} />
         <div className="pb-8"></div>
@@ -43,7 +50,7 @@ function WorkCard({ work }) {
 
               <WorkCardInfo>
                 <UserIcon className="w-4 h-4 fill-lightGrayText" />
-                <p>{`${work.workRequests?.length} clients so far`}</p>
+                <p>{`${clientsSoFar.length} clients so far`}</p>
               </WorkCardInfo>
             </div>
             <div className="flex flex-wrap items-center justify-between">

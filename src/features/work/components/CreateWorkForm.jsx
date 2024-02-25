@@ -16,7 +16,6 @@ function CreateWorkForm() {
   const [subImages, setSubImages] = useState([]);
   const [errorImage, setErrorImage] = useState({});
   const [loading, setLoading] = useState(false);
-  console.log(subImages);
   const { createWork } = useWork();
 
   const navigate = useNavigate();
